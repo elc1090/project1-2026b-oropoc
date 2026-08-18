@@ -1,4 +1,4 @@
-# Image Annotator
+# Remake Image Annotator
 
 A small client-side image annotation app built with plain HTML, CSS and JavaScript.
 
