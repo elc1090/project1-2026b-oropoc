@@ -42,6 +42,7 @@ Depois abra `http://localhost:8000`.
 
 Os dados ficam somente no IndexedDB do navegador/dispositivo atual. O protótipo não deve ser tratado como sistema institucional de registro acadêmico.
 
+#
 # Remake Chamada Local
 
 Notei que o programa funciona com uma lista de studantes e uma lista de ausencia, o que ele faz eh, quando o aluno estah na lista de ausencia ele eh marcado como ausente, se nao eh presente, ou seja, a funcao que marca a presenca na verdade estah tirando o aluno da lista de ausencia, tendo uma parte escalonada pela funncao "markAllPresent"
