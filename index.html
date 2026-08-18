@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Image Annotator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Image Annotator</h1>
+      <p>Client-side rectangle annotation</p>
+    </div>
+    <div class="header-actions">
+      <label class="button primary">
+        Open folder
+        <input id="folderInput" type="file" accept="image/*" webkitdirectory multiple hidden />
+      </label>
+      <label class="button">
+        Add images
+        <input id="fileInput" type="file" accept="image/*" multiple hidden />
+      </label>
+      <label class="button">
+        Camera
+        <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
+      </label>
+      <button id="exportJsonBtn" class="button">Export JSON</button>
+      <button id="exportCsvBtn" class="button">Export CSV</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <strong>Images</strong>
+        <span id="imageCount">0</span>
+      </div>
+      <div id="imageList" class="image-list"></div>
+    </aside>
+
+    <section class="workspace">
+      <div class="toolbar">
+        <button id="selectToolBtn" class="tool-button active" title="Select / move / resize annotations">Select</button>
+        <button id="drawToolBtn" class="tool-button" title="Draw a rectangle">Draw</button>
+        <button id="deleteBtn" class="tool-button danger" disabled>Delete</button>
+        <span class="toolbar-separator"></span>
+        <button id="zoomOutBtn" class="tool-button">−</button>
+        <button id="zoomResetBtn" class="tool-button">100%</button>
+        <button id="zoomInBtn" class="tool-button">+</button>
+        <span class="toolbar-help">Wheel/pinch to zoom · drag empty space to pan</span>
+      </div>
+
+      <div id="viewport" class="viewport" tabindex="0" aria-label="Image annotation area">
+        <div id="stage" class="stage">
+          <img id="mainImage" alt="Selected image" draggable="false" />
+          <div id="overlay" class="overlay"></div>
+        </div>
+        <div id="emptyState" class="empty-state">
+          <strong>No image selected</strong>
+          <span>Open a folder, add files, or use the camera.</span>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <span id="imageStatus">No image</span>
+        <span id="annotationStatus">0 annotations</span>
+      </div>
+    </section>
+
+    <aside class="properties-panel">
+      <div class="panel-header">Annotation</div>
+      <div id="annotationForm" class="annotation-form empty">
+        <p>Select an annotation to edit its tag.</p>
+      </div>
+    </aside>
+  </main>
+
+  <template id="annotationFormTemplate">
+    <label>
+      <span>Tag</span>
+      <input id="tagInput" type="text" placeholder="e.g. person, signature, object" autocomplete="off" />
+    </label>
+    <div class="coordinate-grid">
+      <div><span>X</span><strong data-field="x"></strong></div>
+      <div><span>Y</span><strong data-field="y"></strong></div>
+      <div><span>W</span><strong data-field="width"></strong></div>
+      <div><span>H</span><strong data-field="height"></strong></div>
+    </div>
+    <small>Coordinates are stored in original image pixels.</small>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
