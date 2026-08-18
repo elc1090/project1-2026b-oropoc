@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chamada Local</title>
+  <meta name="theme-color" content="#111111" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">IndexedDB demo</p>
+        <h1>Chamada Local</h1>
+      </div>
+      <button id="manageClassesBtn" class="button secondary compact" type="button">Turmas</button>
+    </header>
+
+    <main>
+      <section id="emptyState" class="panel hero-panel">
+        <div class="hero-copy">
+          <span class="badge">Offline-first</span>
+          <h2>Faça a chamada sem depender de servidor.</h2>
+          <p>Importe uma turma em CSV, registre a presença e mantenha os dados neste navegador.</p>
+        </div>
+
+        <div class="import-card">
+          <div class="step-number">1</div>
+          <div class="import-copy">
+            <h3>Importe uma turma</h3>
+            <p>O arquivo precisa ter duas colunas: <code>id</code> e <code>nome</code>.</p>
+          </div>
+          <label class="button primary file-button">
+            Importar CSV
+            <input id="csvInput" type="file" accept=".csv,text/csv" hidden />
+          </label>
+          <button id="loadSampleBtn" class="button ghost" type="button">Usar turma de exemplo</button>
+        </div>
+
+        <div class="csv-example" aria-label="Exemplo de CSV">
+          <div class="csv-header">turma.csv</div>
+          <pre>id,nome
+2026001,Ana Silva
+2026002,Bruno Souza
+2026003,Carla Mendes</pre>
+        </div>
+      </section>
+
+      <section id="dashboard" class="dashboard hidden">
+        <div class="toolbar panel">
+          <div class="field class-field">
+            <label for="classSelect">Turma</label>
+            <select id="classSelect"></select>
+          </div>
+
+          <div class="field date-field">
+            <label for="sessionDate">Data</label>
+            <input id="sessionDate" type="date" />
+          </div>
+
+          <button id="startSessionBtn" class="button primary" type="button">Abrir chamada</button>
+        </div>
+
+        <section id="sessionArea" class="hidden">
+          <div class="session-header">
+            <div>
+              <p id="sessionMeta" class="eyebrow"></p>
+              <h2 id="sessionTitle">Chamada</h2>
+            </div>
+            <div id="progressText" class="progress-text">0 de 0 marcados</div>
+          </div>
+
+          <div class="summary-grid">
+            <button class="summary-card summary-action" data-filter="all" type="button">
+              <span class="summary-label">Total</span>
+              <strong id="totalCount">0</strong>
+            </button>
+            <button class="summary-card summary-action" data-filter="present" type="button">
+              <span class="summary-label">Presentes</span>
+              <strong id="presentCount">0</strong>
+            </button>
+            <button class="summary-card summary-action" data-filter="absent" type="button">
+              <span class="summary-label">Ausentes</span>
+              <strong id="absentCount">0</strong>
+            </button>
+            
+          </div>
+
+          <div class="attendance-toolbar panel">
+            <div class="search-wrap">
+              <input id="searchInput" type="search" placeholder="Buscar estudante" autocomplete="off" />
+            </div>
+            <div class="bulk-actions">
+              <button id="markAllPresentBtn" class="button secondary compact" type="button">Marcar todos</button>
+            </div>
+          </div>
+
+          <div id="studentList" class="student-list"></div>
+
+          <footer class="session-footer panel">
+            <div>
+              <strong id="saveState">Salvo neste navegador</strong>
+              <span>IndexedDB</span>
+            </div>
+            <div class="footer-actions">
+              <button id="exportCsvBtn" class="button secondary" type="button">Exportar CSV</button>
+              <button id="exportJsonBtn" class="button secondary" type="button">Exportar JSON</button>
+            </div>
+          </footer>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="classDialog">
+    <div class="dialog-card">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">Turmas salvas</p>
+          <h2>Gerenciar turmas</h2>
+        </div>
+        <button id="closeDialogBtn" class="icon-button" type="button" aria-label="Fechar">×</button>
+      </div>
+
+      <div id="classList" class="class-list"></div>
+
+      <div class="dialog-footer">
+        <label class="button primary file-button">
+          Importar outra turma
+          <input id="dialogCsvInput" type="file" accept=".csv,text/csv" hidden />
+        </label>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="importDialog">
+    <form id="importForm" class="dialog-card compact-dialog">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">Importar CSV</p>
+          <h2>Nome da turma</h2>
+        </div>
+        <button id="cancelImportBtn" class="icon-button" type="button" aria-label="Cancelar">×</button>
+      </div>
+      <p id="importSummary" class="muted"></p>
+      <div class="field">
+        <label for="classNameInput">Turma</label>
+        <input id="classNameInput" type="text" required maxlength="80" placeholder="Ex.: Web 2026A" />
+      </div>
+      <div class="dialog-footer end">
+        <button id="cancelImportTextBtn" class="button ghost" type="button">Cancelar</button>
+        <button class="button primary" type="submit">Importar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
