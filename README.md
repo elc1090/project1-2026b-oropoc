@@ -1,1 +1,1 @@
-# project1-2026b-oropoc
+# remake app image annotator
