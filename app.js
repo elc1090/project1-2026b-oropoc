@@ -489,6 +489,48 @@ async function markAllPresent() {
   updateSummary();
 }
 
+async function markAllAbsent() {
+  const records = await getByIndex("attendance", "sessionId", currentSession.id);
+  const transaction = db.transaction("attendance", "readwrite");
+  const store = transaction.objectStore("attendance");
+  records.forEach(record => store.delete(record.id));
+  //   attendanceMap.set(student.key, "absent");
+  //   await put("attendance", {
+  //     id: `${currentSession.id}:${student.key}`,
+  //     sessionId: currentSession.id,
+  //     classId: currentClass.id,
+  //     date: currentSession.date,
+  //     studentKey: student.key,
+  //     studentId: student.id,
+  //     studentName: student.name,
+  //     status: "absent",
+  //     updatedAt: new Date().toISOString()
+  //   await new Promise((resolve, reject) => {
+  //   transaction.oncomplete = resolve;
+  //   transaction.onerror = () => reject(transaction.error);
+  // });
+
+  attendanceMap.clear();
+  flashSaved();
+  renderStudents();
+  updateSummary();
+}
+
+async function calculateAbsencePercentage(studentKey, classId) {
+  const sessions = await getByIndex("sessions", "classId", classId);
+  if (!sessions.length) return 0;
+
+  const sessionIds = new Set(sessions.map(session => session.id));
+  const attendance = await getByIndex("attendance", "studentKey", studentKey);
+  const absences = attendance.filter(record =>
+    record.classId === classId &&
+    sessionIds.has(record.sessionId) &&
+    record.status === "absent"
+  );
+
+  return Number(((absences.length / sessions.length) * 100).toFixed(2));
+}
+
 function updateSummary() {
   const total = currentStudents.length;
   let absent = 0;
