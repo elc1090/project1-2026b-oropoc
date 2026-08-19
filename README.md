@@ -47,6 +47,8 @@ Os dados ficam somente no IndexedDB do navegador/dispositivo atual. O protótipo
 
 Notei que o programa funciona com uma lista de studantes e uma lista de ausencia, o que ele faz eh, quando o aluno estah na lista de ausencia ele eh marcado como ausente, se nao eh presente, ou seja, a funcao que marca a presenca na verdade estah tirando o aluno da lista de ausencia, tendo uma parte escalonada pela funncao "markAllPresent"
 
+O app armazena multiplas chamadas com os mesmos alunos usando o arquivo CSV para ter o nome dos alunos e o ID, que, conforme o usuario coloca datas para compor sua chamada, suas presencas sao armazenadas idependente uma das outras e suas classes sao feitas conforme o usuario abre chamada na data selecionada
+
 ## Demanda
 
 - Ter um botao com a opcao de desmarcar todos
