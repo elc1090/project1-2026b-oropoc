@@ -44,6 +44,7 @@ const el = {
   cancelImportBtn: $("cancelImportBtn"),
   cancelImportTextBtn: $("cancelImportTextBtn"),
   toast: $("toast"),
+  studentTooltip: $("studentTooltip"),
 };
 
 document.addEventListener("DOMContentLoaded", init);
@@ -201,7 +202,7 @@ async function handleFileInput(input) {
 }
 
 function parseCsv(text) {
-  const normalized = text.replace(/^\uFEFF/, "").trim();
+  const normalized = text.replace(/^﻿/, "").trim();
   if (!normalized) return [];
 
   const lines = normalized.split(/\r?\n/).filter(line => line.trim());
@@ -268,7 +269,7 @@ function parseCsvLine(line, delimiter) {
 }
 
 function normalizeHeader(value) {
-  return value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return value.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
 async function confirmImport(event) {
@@ -442,10 +443,50 @@ function renderStudents() {
       setPresence(student, event.target.checked);
     });
 
+    const nameEl = row.querySelector(".student-name");
+    nameEl.addEventListener("mouseenter", () => showStudentTooltip(nameEl, student));
+    nameEl.addEventListener("mouseleave", hideStudentTooltip);
+
     fragment.append(row);
   }
 
   el.studentList.append(fragment);
+}
+
+async function showStudentTooltip(target, student) {
+  if (!el.studentTooltip || !currentClass) return;
+
+  el.studentTooltip.dataset.studentKey = student.key;
+
+  el.studentTooltip.innerHTML = `
+    <strong>${escapeHtml(student.name)}</strong>
+    <span>Matrícula: ${escapeHtml(student.id)}</span>
+    <span>Calculando faltas…</span>
+  `;
+  positionTooltip(target);
+  el.studentTooltip.classList.remove("hidden");
+
+  const percentage = await calculateAbsencePercentage(student.key, currentClass.id);
+
+  if (el.studentTooltip.dataset.studentKey !== student.key) return;
+
+  el.studentTooltip.innerHTML = `
+    <strong>${escapeHtml(student.name)}</strong>
+    <span>Matrícula: ${escapeHtml(student.id)}</span>
+    <span>Faltas: ${percentage}%</span>
+  `;
+}
+
+function positionTooltip(target) {
+  const rect = target.getBoundingClientRect();
+  el.studentTooltip.style.left = `${rect.left + window.scrollX}px`;
+  el.studentTooltip.style.top = `${rect.bottom + window.scrollY + 8}px`;
+}
+
+function hideStudentTooltip() {
+  if (!el.studentTooltip) return;
+  el.studentTooltip.classList.add("hidden");
+  delete el.studentTooltip.dataset.studentKey;
 }
 
 async function setPresence(student, isPresent) {
@@ -518,13 +559,13 @@ async function markAllAbsent() {
 
 async function calculateAbsencePercentage(studentKey, classId) {
   const sessions = await getByIndex("sessions", "classId", classId);
-  if (!sessions.length) 
+  if (!sessions.length)
     return 0;
 
   const sessionIds = new Set(sessions.map(session => session.id));
   const attendance = await getByIndex("attendance", "studentKey", studentKey);
   const absences = attendance.filter(record =>
-    record.classId === classId && sessionIds.has(record.sessionId) 
+    record.classId === classId && sessionIds.has(record.sessionId)
     && record.status === "absent");
 
   return Number(((absences.length / sessions.length) * 100).toFixed(2));
@@ -688,7 +729,7 @@ function formatDate(isoDate) {
 
 function safeFileName(name) {
   return name.normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[̀-ͯ]/g, "")
     .replace(/[^\w.-]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .toLowerCase();
