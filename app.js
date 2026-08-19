@@ -518,15 +518,14 @@ async function markAllAbsent() {
 
 async function calculateAbsencePercentage(studentKey, classId) {
   const sessions = await getByIndex("sessions", "classId", classId);
-  if (!sessions.length) return 0;
+  if (!sessions.length) 
+    return 0;
 
   const sessionIds = new Set(sessions.map(session => session.id));
   const attendance = await getByIndex("attendance", "studentKey", studentKey);
   const absences = attendance.filter(record =>
-    record.classId === classId &&
-    sessionIds.has(record.sessionId) &&
-    record.status === "absent"
-  );
+    record.classId === classId && sessionIds.has(record.sessionId) 
+    && record.status === "absent");
 
   return Number(((absences.length / sessions.length) * 100).toFixed(2));
 }
