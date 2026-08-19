@@ -53,3 +53,7 @@ O app armazena multiplas chamadas com os mesmos alunos usando o arquivo CSV para
 
 - Ter um botao com a opcao de desmarcar todos
 - Mostrar a porcentagem de presenca dos alunos (?)
+
+### Mostrar porcentagem:
+
+Olhando pelas ferramentas percebi que a table attendance mostra o nome do aluno, seu ID, seu status de falta e a data que teve a falta, pensando nisso, acredito que a unica coisa que preciso fazer eh percorrer esse "attendance" e, pelo id, pegar quantas vezes o aluno apareceu faltando e depois pegar quantas "session" tem e aplicar a razao para ter a porcentagem
