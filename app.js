@@ -30,6 +30,7 @@ const el = {
   searchInput: $("searchInput"),
   studentList: $("studentList"),
   markAllPresentBtn: $("markAllPresentBtn"),
+  markAllAbsentBtn: $("markAllAbsentBtn"),
   saveState: $("saveState"),
   exportCsvBtn: $("exportCsvBtn"),
   exportJsonBtn: $("exportJsonBtn"),
@@ -71,6 +72,7 @@ function bindEvents() {
   });
   el.searchInput.addEventListener("input", renderStudents);
   el.markAllPresentBtn.addEventListener("click", markAllPresent);
+  el.markAllAbsentBtn.addEventListener("click", markAllAbsent);
   el.exportCsvBtn.addEventListener("click", exportCsv);
   el.exportJsonBtn.addEventListener("click", exportJson);
 
@@ -514,6 +516,7 @@ async function setPresence(student, isPresent) {
 }
 
 async function markAllPresent() {
+  console.log("Marking all present");
   const records = await getByIndex("attendance", "sessionId", currentSession.id);
   const transaction = db.transaction("attendance", "readwrite");
   const store = transaction.objectStore("attendance");
@@ -531,27 +534,32 @@ async function markAllPresent() {
 }
 
 async function markAllAbsent() {
+  console.log ("markAllAbsent called");
   const records = await getByIndex("attendance", "sessionId", currentSession.id);
   const transaction = db.transaction("attendance", "readwrite");
   const store = transaction.objectStore("attendance");
   records.forEach(record => store.delete(record.id));
-  //   attendanceMap.set(student.key, "absent");
-  //   await put("attendance", {
-  //     id: `${currentSession.id}:${student.key}`,
-  //     sessionId: currentSession.id,
-  //     classId: currentClass.id,
-  //     date: currentSession.date,
-  //     studentKey: student.key,
-  //     studentId: student.id,
-  //     studentName: student.name,
-  //     status: "absent",
-  //     updatedAt: new Date().toISOString()
-  //   await new Promise((resolve, reject) => {
-  //   transaction.oncomplete = resolve;
-  //   transaction.onerror = () => reject(transaction.error);
-  // });
 
-  attendanceMap.clear();
+  for (const student of currentStudents) {
+    store.put({
+      id: `${currentSession.id}:${student.key}`,
+      sessionId: currentSession.id,
+      classId: currentClass.id,
+      date: currentSession.date,
+      studentKey: student.key,
+      studentId: student.id,
+      studentName: student.name,
+      status: "absent",
+      updatedAt: new Date().toISOString()
+    });
+  }
+
+  await new Promise((resolve, reject) => {
+    transaction.oncomplete = resolve;
+    transaction.onerror = () => reject(transaction.error);
+  });
+
+  attendanceMap = new Map(currentStudents.map(student => [student.key, "absent"]));
   flashSaved();
   renderStudents();
   updateSummary();
