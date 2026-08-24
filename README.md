@@ -49,7 +49,39 @@ Depois de fazer as funções com a ajuda da IA, além de usar ela para conseguir
 
 ### Trechos de código
 
-Indique pelo menos 3 trechos de código que você queira destacar para a turma (por exemplo, para contrastar com o código original, para explicar algo que aprendeu, para alertar sobre alguma dificuldade de compreensão, para mostrar uma curiosidade, etc).
+## Primeiro trecho
+
+<img width="702" height="187" alt="image" src="https://github.com/user-attachments/assets/7f8772d0-08da-4811-b201-8ea1c57484c0" />
+
+- Esse trecho possui o Promise, que eh um jeito do JS para representar uma resposta que ainda vai chegar soh que demora um pouco a mais do que o navegador esperaria, como se fosse uma resposta vazia que depois eh preenchida com o acerto ou erro, isso permite que o codigo continue rodando enquanto isso
+
+## Segundo trecho
+
+<img width="1352" height="452" alt="image" src="https://github.com/user-attachments/assets/0b788d11-ac52-45e9-bd57-78b045e91167" />
+
+- Esse trecho mostra como o app exporta um arquivo JSON, pegando os dados da turma, data da sessao e a lista de presenca e coloca num texto no formatado como JSON, quem cria o arquivo e dispara para download eh a funcao downloadBlob
+
+<img width="602" height="291" alt="image" src="https://github.com/user-attachments/assets/1f0ac405-6226-4f66-ad8b-ed58a6e67ffe" />
+
+- Ela recebe três parâmetros: o conteúdo do arquivo (content, texto do CSV ou JSON), o nome do arquivo (fileName) e o tipo MIME (type, tipo "application/json" ou "text/csv;charset=utf-8").
+
+O que ela faz, passo a passo:
+
+- new Blob([content], { type }) empacota o texto num objeto Blob, que é basicamente "um arquivo em memória" — os dados brutos mais a informação de que tipo de arquivo é.
+
+- URL.createObjectURL(blob) gera uma URL temporária (algo tipo blob:https://seusite.com/xxxx-xxxx) que aponta pra esse Blob na memória do navegador.
+
+- Depois ela cria um link <a> invisível (document.createElement("a")), aponta o href pra essa URL e define download = fileName — é esse atributo download que faz o navegador salvar o arquivo em vez de tentar abrir/navegar pra ele.
+
+- Adiciona o link no body, dispara um clique nele via código (a.click()) — simulando o usuário clicando num link de download — e remove o link em seguida, já que ele só serviu pra disparar o download.
+
+- URL.revokeObjectURL(url) libera a memória usada pelo Blob, já que ele não é mais necessário depois do download disparado.
+
+## Terceiro trecho
+
+<img width="513" height="311" alt="image" src="https://github.com/user-attachments/assets/e63fee09-068c-485a-86c9-732f29f23ade" />
+
+- Quando eu falei que soh precisei copiar e colar um novo botao que ele se alinhou sozinho esse style foi o resposavel por isso, os botoes de marcar e desmarcar estam dentro desse container que usa "flex" para se alinharam automaticamente com um gap (distancia) padrao.
 
 
 ## Tecnologias
