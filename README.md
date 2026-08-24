@@ -45,6 +45,10 @@ Primeira coisa que eu fiz foi tentar abrir ele pelo localhost usando o python, v
 
 Pensando na primeira demanda de ter um botao de desmarcar todos eu procurei a funcao que marcava todos e fui entender como ela funcionava relacionada com eventos de botao, css e o index.html. Alem dissso procurei entender como que ele setava as ausencias e as presencas no app, foi ai que, olhando pelas ferramentas de desenvolvedor, percebi que a table attendance mostra o nome do aluno, seu ID, seu status de falta e a classe e a data que teve a falta, pensando nisso, vi que a unica coisa que precisava fazer era percorrer esse "attendance" e pelas classes e, pelo id, pegar quantas vezes o aluno apareceu faltando e depois pegar quantas "session" tem para aplicar a razao para ter essa porcentagem.
 
+Minhas demandas eram basicamente mexer nas relacoes entre as funcoes de marcar presenca e o banco de dados do app, por isso que quando eu vi pelas ferramentas de desenvolvedor no site eu tive dois insites ao mesmo tempo, escalonar a funcao de marcar falta do aluno (que eh colocar o estudante dentro do objeto attendance) e tambem a ideia e passar um "for" pelo attendance porque lah tinha tudo que eu precisava.
+
+Depois de fazer as funcoes com a ajuda da IA, alem de usar ela para conseguir entender a base do codigo utilizei a IA para fazer um modal quando eu passasse o mouse no nome dos estudantes para aparecer sua frequencia de faltas e soh copiei e colei o formato do botao de marcar todos pois pelo jeito que foi feito, se colocasse outro elemento ele iria ser automaticamente ajustado (pelo que eu entendi e me lembro).
+
 
 ### Trechos de código
 
