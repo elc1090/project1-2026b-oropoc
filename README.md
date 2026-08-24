@@ -20,11 +20,10 @@ Joao Daniel Wurdig Lucas, Sistemas de Informacao UFSM
 
 ### Descrição
 
-[Substitua este texto por uma descrição do app original. Inclua observações sobre sua autoria, conteúdo, aparência e código.]
 
-Notei que o programa funciona com uma lista de studantes e uma lista de ausencia, o que ele faz eh, quando o aluno estah na lista de ausencia ele eh marcado como ausente, se nao, eh presente, ou seja, a funcao que marca a presenca na verdade estah tirando o aluno da lista de ausencia, tendo uma parte escalonada pela funncao "markAllPresent"
+Notei que o programa funciona com uma lista de estudantes e uma lista de ausência, o que ele faz é, quando o aluno está na lista de ausência ele é marcado como ausente, se não, é presente, ou seja, a função que marca a presença na verdade está tirando o aluno da lista de ausência, tendo uma parte escalonada pela função "markAllPresent".
 
-O app armazena multiplas chamadas com os mesmos alunos usando o arquivo CSV para ter o nome dos alunos e o ID, que, conforme o usuario coloca datas para compor sua chamada, suas presencas sao armazenadas idependente uma das outras e suas classes sao feitas conforme o usuario abre chamada na data selecionada
+O app armazena múltiplas chamadas com os mesmos alunos usando o arquivo CSV para ter o nome dos alunos e o ID, que, conforme o usuário coloca datas para compor sua chamada, suas presenças são armazenadas independente uma das outras e suas classes são feitas conforme o usuário abre chamada na data selecionada.
 
 ## Demanda do(a) cliente
 
@@ -57,25 +56,20 @@ Indique pelo menos 3 trechos de código que você queira destacar para a turma (
 
 ### Linguagens e afins
 
-Substitua este trecho por uma lista detalhada de tecnologias usadas no remake (tanto as básicas, como HTML, CSS e JavaScript, como alguma específica, por exemplo APIs externas, etc.):
-- ...
-- ...
-- 
+- HTML
+- CSS
+- JavaScript
 
 ### Ambiente de desenvolvimento
 
-Substitua este trecho por uma lista detalhada dos ambientes/ferramentas de desenvolvimento que você usou (por exemplo, VS Code + alguma extensão, agentes de IA, etc.)
-- ...
-- ...
+- VS Code
 
 ## Referências e créditos
 
-Substitua este trecho por uma lista bem detalhada de todo material que você consultou para ajudar no projeto, por exemplo:  URLs de vídeos ou outro material consultado, créditos para colegas que colaboraram, geradores de código, etc.
-- ...
-- ...
-
-
-
+- video: Seu primeiro código HTML - @Curso em Vídeo HTML5 e CSS3 (https://youtu.be/E6CdIawPTh0?si=yRCqDDAoEUyCR2xB)
+- Claude AI
+- Auxilio da professora Andrea Schwertner Charão
+- Dev Tools
 
 ---
 Projeto entregue para a disciplina de [Desenvolvimento de Software para a Web](http://github.com/andreainfufsm/elc1090-2026b) em 2026b
